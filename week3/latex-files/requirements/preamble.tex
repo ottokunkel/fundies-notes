@@ -84,6 +84,23 @@
 % TCOLORBOX SETUPS
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+%===============================
+% NO HEADING BOXES
+%===============================
+\tcbuselibrary{theorems,skins,hooks}
+\newtcolorbox{purplebox}{
+%
+	enhanced
+	,breakable
+	,colback = mytheorembg
+	,frame hidden
+	,boxrule = 0sp
+	,borderline west = {2pt}{0pt}{mytheoremfr}
+	,sharp corners
+	,description font = \mdseries
+	,separator sign none
+}
+
 \setlength{\parindent}{1cm}
 %================================
 % THEOREM BOX
@@ -609,6 +626,7 @@
 \newcommand{\qs}[2]{\begin{question}{#1}{}#2\end{question}}
 \newcommand{\pf}[2]{\begin{myproof}[#1]#2\end{myproof}}
 \newcommand{\nt}[1]{\begin{note}#1\end{note}}
+\newcommand{\purple}[1]{\begin{purplebox}#1\end{purplebox}}
 \newcommand{\ndef}[1]{\begin{newDefinition}{}#1\end{newDefinition}}
 
 \newcommand*\circled[1]{\tikz[baseline=(char.base)]{

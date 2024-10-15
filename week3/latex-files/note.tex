@@ -14,7 +14,11 @@
 
 \chapter{Combinational Building Blocks (2.8)}
 \section{K-maps}
-Graphical way to find simplified equations. The goal is to circle the largest groups of truth outputs.
+\purple{
+Graphical way to find simplified equations.
+}
+
+The goal is to circle the largest groups of truth outputs.
 For each circle, create a sum of products equation where each term includes the products that change. For example:
 
 \includegraphics[width=5in]{K-map.png}
@@ -23,8 +27,9 @@ For each circle, create a sum of products equation where each term includes the 
 \newpage
 
 \section{Multiplexers (Mux)}
-
-Often called a mux, a multiplexer is a combinational circuit that chooses among several possible inputs with a \textit{select} signal
+\purple{
+A multiplexer is a combinational circuit that chooses among N inputs with an N-bit \textit{select} signal
+}
 Below is a k-map and implementation of a Mux
 
 \begin{figure}[h!]
@@ -59,6 +64,10 @@ half. You do this by providing one of the literals of the logic function to the 
 \pagebreak
 
 \section{Decoders}
+\purple{
+  A combinational circuit that transforms N-bit inputs to a $2^n$ output
+}
+
 A decorder is, in a sense, the opposite of a Mux. It has N inputs, and $2^n$ outputs. The outputs are \textit{one hot}. That is, only one is 
 True / 1. 
 
@@ -83,12 +92,14 @@ They are fundemental in modern computing.
 
 \section{addition}
 \subsection{Half Adder}
-
-\noindent Adds two bits and has one \textit{carry-out} bit to perform binary addition. There are 2 inputs for each singular bit and then two outputs.
+\purple{
+A circuit that adds two bits and has one \textit{carry-out} bit to perform binary addition. 
+}
+There are 2 inputs for each singular bit and then two outputs.
 The output signal $S$ represents the single bit output and the output signal $C_{out}$ is for the Carry-bit for the next position / adder.
 \medskip
 
-\noindent They can be made from an XOR gate and an AND gate. The $C_{out}$ bit will be used when creating multi-bit adders from these single bit ones. 
+They can be made from an XOR gate and an AND gate. The $C_{out}$ bit will be used when creating multi-bit adders from these single bit ones. 
 \begin{figure}[h!]
   \centering
   \includegraphics[width=1.5in]{half-adder.png}
@@ -96,18 +107,24 @@ The output signal $S$ represents the single bit output and the output signal $C_
 \pagebreak
 
 \subsection{Full Adder}
-\noindent Accepts a carry-in $C_{in}$ bit from a Half-adder. It basically adds 3 1-bit inputs in order to output two bits \medskip
+\purple{
+  Circuit that, like a half-adder performs binary addition, but also has a carry-in, $C_{in}$, bit
+}
+It basically adds 3 1-bit inputs in order to output two bits \medskip
 \begin{figure}[h!]
   \centering
-  \includegraphics[width=.25\textwidth]{full-adder.png}
+  \includegraphics[width=.5\textwidth]{full-adder.png}
 \end{figure}
-
+\pagebreak
 \subsection{Carry Propagate Adder (CPA)}
-\noindent These circuits can be put together to create a Carry Propagate Adder. This takes two N-bit inputs
+These circuits can be put together to create a Carry Propagate Adder. This takes two N-bit inputs
 and a 1-bit $C_{in}$ to produce a N-bit $S$, and a 1-bit $C_{out}$.
 
 \subsection{Ripple Carry Adder}
-\noindent This is the simplest way to create a CPA. Here, you chain together full adders along with 1 Half-adder at the end. 
+\purple{
+  A linear chain of 1-bit adders to perform N-bit addition
+}
+This is the simplest way to create a CPA. Here, you chain together full adders along with 1 Half-adder at the end. 
 \begin{figure}[h!]
   \centering
   \includegraphics[width=0.25\textwidth]{Carry-Propagate-adder.png} % First image
@@ -115,11 +132,10 @@ and a 1-bit $C_{in}$ to produce a N-bit $S$, and a 1-bit $C_{out}$.
   \includegraphics[width=0.65\textwidth]{Ripple-carry-adder.png} % Second image
 \end{figure}
 
-\noindent The disadvantage with Ripple Carry Adders is that it becomes slow when N is large. 
+The disadvantage with Ripple Carry Adders is that it becomes slow when N is large. 
 The bits must wait for each bit to add before it. 
 
 \smallbreak 
-\noindent
 This is the formula for the speed of a ripple carry adder, where $t_{\mathrm{FA}}$ is the delay of the full adder:
 
 \[
@@ -128,7 +144,10 @@ This is the formula for the speed of a ripple carry adder, where $t_{\mathrm{FA}
 \pagebreak
 
 \subsection{Carry-Lookahead Adder}
-\noindent This is another type of CPA, which tries to fix the speed problem of Ripple-carry adders. 
+\purple{
+  Another way to perform N-bit addition. Divides Adders into blocks to perform addition quicker. 
+}
+This is another type of CPA, which tries to fix the speed problem of Ripple-carry adders. 
 It attempts to divide the adder into blocks and determines the $C_{out}$ as soon as the $C_{in}$ is known.
 
 \bigbreak
@@ -157,20 +176,23 @@ We can rewrite this into blocks.
   \boxed{C_i = G_{i:j} + P_{i:j}C_j}
 \]
 
-\noindent \underline{The key is that the Generate and Propagate signals can be found immediately}
-\noindent without waiting for the previous column
+\underline{The key is that the Generate and Propagate signals can be found immediately}
+without waiting for the previous column
 
 \begin{figure}[h!]
   \centering
   \includegraphics[width=.5\textwidth]{Carry-lookahead.png}
 \end{figure}
 
-\noindent Where $t_{\mathrm{pg}}$ is the delay of the (P, G) gates. $t_{\mathrm{pg\_block}}$ is the delay to find the gen/prop signals. $k$ is the bits per block and $N$ is the number of blocks.
+Where $t_{\mathrm{pg}}$ is the delay of the (P, G) gates. $t_{\mathrm{pg\_block}}$ is the delay to find the gen/prop signals. $k$ is the bits per block and $N$ is the number of blocks.
 \[
   T_{\mathrm{CLA}} = t_{\mathrm{pg}} + t_{\mathrm{pg\_block}} + \left( \frac{N}{k} - 1 \right)t_{\mathrm{AND\_OR}} + kt_{\mathrm{FA}}
 \]
 
 \subsection{Prefix Adders}
+\purple{
+  A way to perform N-bit addition like CLA, but recursively breaks down the N-bits into blocks. 
+}
 These are the same as the Carry lookahead adders, however they calculate the $G_i$ and $P_i$ signals for each 2 columns, then every 4 columns etc.
 
 \[
@@ -179,8 +201,8 @@ These are the same as the Carry lookahead adders, however they calculate the $G_
 
 \begin{figure}[h!]
   \centering
-  \includegraphics[width=.9\textwidth]{prefix_adder_schematic.png}
-  \includegraphics[width=.9\textwidth]{prefix_schematic_legend.png}
+  \includegraphics[width=.7\textwidth]{prefix_adder_schematic.png}
+  \includegraphics[width=.7\textwidth]{prefix_schematic_legend.png}
 \end{figure}
 
 The critical path of an N-bit prefix adder involves the combination of $P_i$ and $G_i$ followed by $\lg N$ stages of black prefix cells
@@ -189,5 +211,18 @@ The critical path of an N-bit prefix adder involves the combination of $P_i$ and
   t_{PA} = t_{pg} + \lg N \left( t_{pg \_ \mathrm{prefix}} \right) + t_{\mathrm{XOR}}
 \]
 \pagebreak
+
+\subsection{Subtraction}
+\purple{
+Using two's complement, it is exactly the same as addition. That is flipping the bits and adding 1.
+}
+
+\subsection{Comparators}
+\purple{
+  
+
+}
+
+
 
 \end{document}

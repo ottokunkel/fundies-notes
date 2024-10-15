@@ -6,4 +6,5 @@
 *.log
 *.synctex.gz
 
+*/latex-files/build/
 /latex-files/build/
