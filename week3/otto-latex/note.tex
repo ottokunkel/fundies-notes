@@ -1,0 +1,193 @@
+\documentclass[12pt]{report}
+
+\input{./requirements/preamble.tex}
+\input{./requirements/macros.tex}
+\input{./requirements/letterfonts.tex}
+\setlength{\parindent}{0pt}
+\graphicspath{ {./assets/} }
+
+\title{\Huge{Some Class}\\Random Examples}
+\author{\huge{Your Name}}
+\date{}
+
+\begin{document}
+
+\chapter{Combinational Building Blocks (2.8)}
+\section{K-maps}
+Graphical way to find simplified equations. The goal is to circle the largest groups of truth outputs.
+For each circle, create a sum of products equation where each term includes the products that change. For example:
+
+\includegraphics[width=5in]{K-map.png}
+
+
+\newpage
+
+\section{Multiplexers (Mux)}
+
+Often called a mux, a multiplexer is a combinational circuit that chooses among several possible inputs with a \textit{select} signal
+Below is a k-map and implementation of a Mux
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=2in]{2-bit-mux.png}
+  \includegraphics[width=0.45\textwidth]{mux-kmap.png} % First image
+  \hspace{0.05\textwidth} % Adjust space between images (optional)
+  \includegraphics[width=0.45\textwidth]{mux-implementation.png} % Second image
+\end{figure}
+
+\pagebreak
+
+\section{Larger Multiplexers}
+Larger multiplexers can be used as well. We will need a \textit{select} signal of $\lg (n)$ for an $n$:1 input multiplexer
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=2in]{4-bit-mux.png}
+\end{figure}
+
+\noindent There are three ways to implement a mux: Two level logic, Tri-states, and hierarchical
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=6in]{n-bit-mux-implementation.png}
+\end{figure}
+
+\noindent Larger Multiplexers can also be used as \textit{lookup} tables to perform any function and can be reprogrammed with different inputs. 
+In general, a $2^n$ input Multiplexer can be "reprogrammed" to perform any n-input logic function. In addition, one strategy for cutting the size in
+half. You do this by providing one of the literals of the logic function to the input of the Mux. This allows for $2^{n-1}$ input Mux. 
+
+\pagebreak
+
+\section{Decoders}
+A decorder is, in a sense, the opposite of a Mux. It has N inputs, and $2^n$ outputs. The outputs are \textit{one hot}. That is, only one is 
+True / 1. 
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.45\textwidth]{2:4-decoder.png} % First image
+  \hspace{0.05\textwidth} % Adjust space between images (optional)
+  \includegraphics[width=0.45\textwidth]{decoder-imp.png} % Second image
+\end{figure}
+
+\noindent Decoders combined with OR gates can be used to create other logic functions. Since they are \textit{one-hot} they represent a single min-term. 
+It makes it easy to implement something like an XNOR.  
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=3in]{XNOR-decoder.png}
+\end{figure}
+
+\chapter{Arithmetic Circuits (5.2)}
+Arithmetic circuits are combinational logic functions that perform the typical arithmetic operations (addition, subtraction, multiplication, division). 
+They are fundemental in modern computing. 
+
+\section{addition}
+\subsection{Half Adder}
+
+\noindent Adds two bits and has one \textit{carry-out} bit to perform binary addition. There are 2 inputs for each singular bit and then two outputs.
+The output signal $S$ represents the single bit output and the output signal $C_{out}$ is for the Carry-bit for the next position / adder.
+\medskip
+
+\noindent They can be made from an XOR gate and an AND gate. The $C_{out}$ bit will be used when creating multi-bit adders from these single bit ones. 
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=1.5in]{half-adder.png}
+\end{figure}
+\pagebreak
+
+\subsection{Full Adder}
+\noindent Accepts a carry-in $C_{in}$ bit from a Half-adder. It basically adds 3 1-bit inputs in order to output two bits \medskip
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=.25\textwidth]{full-adder.png}
+\end{figure}
+
+\subsection{Carry Propagate Adder (CPA)}
+\noindent These circuits can be put together to create a Carry Propagate Adder. This takes two N-bit inputs
+and a 1-bit $C_{in}$ to produce a N-bit $S$, and a 1-bit $C_{out}$.
+
+\subsection{Ripple Carry Adder}
+\noindent This is the simplest way to create a CPA. Here, you chain together full adders along with 1 Half-adder at the end. 
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.25\textwidth]{Carry-Propagate-adder.png} % First image
+  \hspace{0.05\textwidth} % Adjust space between images (optional)
+  \includegraphics[width=0.65\textwidth]{Ripple-carry-adder.png} % Second image
+\end{figure}
+
+\noindent The disadvantage with Ripple Carry Adders is that it becomes slow when N is large. 
+The bits must wait for each bit to add before it. 
+
+\smallbreak 
+\noindent
+This is the formula for the speed of a ripple carry adder, where $t_{\mathrm{FA}}$ is the delay of the full adder:
+
+\[
+  t_{\mathrm{ripple}} = Nt_{\mathrm{FA}}
+\]
+\pagebreak
+
+\subsection{Carry-Lookahead Adder}
+\noindent This is another type of CPA, which tries to fix the speed problem of Ripple-carry adders. 
+It attempts to divide the adder into blocks and determines the $C_{out}$ as soon as the $C_{in}$ is known.
+
+\bigbreak
+\noindent CLA's use $G$ Generate and $P$ Propagate signals to find the $C_{out}$. These signals \underline{do not} depend on previous inputs
+
+\bigskip
+\begin{enumerate}
+  \item \noindent A $G_i$ signal is made if both $A_i$ and $B_i$ are 1 
+  \item \noindent A $P_i$ if a carry if either $A_i$ or $B_i$ are 1
+\end{enumerate}
+\[
+C_i = A_i B_i + (A_i + B_i)C_{i-1} = G_i + P_i C_{i-1}
+\]
+\noindent In other words, there will be a carry if the $i^{\mathrm{th}}$ column generates or is able to propagates a carry. 
+We can rewrite this into blocks.
+
+\[
+  G_{3:0} = G_3 + P_3 (G_2 + P_2 (G_1 + P_1 G_0))
+\]
+
+\[
+  P_{3:0} = P_3 P_2 P_1 P_0
+\]
+
+\[
+  \boxed{C_i = G_{i:j} + P_{i:j}C_j}
+\]
+
+\noindent \underline{The key is that the Generate and Propagate signals can be found immediately}
+\noindent without waiting for the previous column
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=.5\textwidth]{Carry-lookahead.png}
+\end{figure}
+
+\noindent Where $t_{\mathrm{pg}}$ is the delay of the (P, G) gates. $t_{\mathrm{pg\_block}}$ is the delay to find the gen/prop signals. $k$ is the bits per block and $N$ is the number of blocks.
+\[
+  T_{\mathrm{CLA}} = t_{\mathrm{pg}} + t_{\mathrm{pg\_block}} + \left( \frac{N}{k} - 1 \right)t_{\mathrm{AND\_OR}} + kt_{\mathrm{FA}}
+\]
+
+\subsection{Prefix Adders}
+These are the same as the Carry lookahead adders, however they calculate the $G_i$ and $P_i$ signals for each 2 columns, then every 4 columns etc.
+
+\[
+  {S}_{i}=(A_{i}\oplus B_{i})\oplus{C}_{i-1}
+\]
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=.9\textwidth]{prefix_adder_schematic.png}
+  \includegraphics[width=.9\textwidth]{prefix_schematic_legend.png}
+\end{figure}
+
+The critical path of an N-bit prefix adder involves the combination of $P_i$ and $G_i$ followed by $\lg N$ stages of black prefix cells
+
+\[
+  t_{PA} = t_{pg} + \lg N \left( t_{pg \_ \mathrm{prefix}} \right) + t_{\mathrm{XOR}}
+\]
+\pagebreak
+
+\end{document}

@@ -1,0 +1,8 @@
+
+# latex compiled files
+*.aux
+*.fdb_latexmk
+*.files
+*.log
+*.synctex.gz
+
