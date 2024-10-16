@@ -1,0 +1,87 @@
+\documentclass[12pt]{report}
+
+\input{./requirements/preamble.tex}
+\input{./requirements/macros.tex}
+\input{./requirements/letterfonts.tex}
+\setlength{\parindent}{0pt}
+\graphicspath{ {./assets/} }
+
+\title{\Huge{Some Class}\\Random Examples}
+\author{\huge{Your Name}}
+\date{}
+
+\begin{document}
+\chapter*{Chapter 6}
+
+\dfn{Architecture}{
+  "A programmer's view of a computer"
+  Defined by the instruction set and operand locations (registers and memory) 
+}
+
+Here are some examples of popular Computer architecures, most computers use ARM and x86
+\begin{multicols}{2}
+  \begin{itemize}
+    \item x86
+    \item MIPS
+    \item PowerPC
+  \end{itemize}
+
+  \columnbreak
+
+  \begin{itemize}
+    \item ARM
+    \item SPARC
+    
+  \end{itemize}
+\end{multicols}
+
+
+\section{Assembly}
+\purple{
+  assembly is the human-readable representation of a Computer Architecture's native language.
+}
+
+\subsection{Instructions}
+\purple{
+  Assembly is made up of single line instructions that tell the computer what and how to perform different operations
+}
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=.9\textwidth]{instructions.png}
+\end{figure}
+\pagebreak
+
+\subsection{Design Principles}
+\purple{
+  In this section we will include a few principles to remember. Here are two
+}
+
+\underline{\textbf{Principle 1: Simplicity favors regularity}}
+- instructions with consistent number of operands is better. In the above image, we use multiple instructions instead of one instruction with multiple operands
+\bigbreak
+\underline{\textbf{Principle 2: Make the common case fast.}}
+- One thing that MIPS does is keeping the number of different operations low. More complex operations are made into multiple instructions. 
+
+\subsection{Operands, Registers, Memory and Constants}
+
+\purple{
+Operands are the things upon which the instuctions act on. They can be stored in registers, memory, or constants in the instruction itself.
+The instruction sets themselves only hold 32-64 bits
+}
+\subsection{Registers}
+\purple{Memory takes a long time to access so there are Registers to quickly access common operands.}
+
+\smallbreak
+MIPS uses 32 registers
+\bigbreak
+\underline{\textbf{Principle 3: Smaller is faster}}
+- For example, its is better to search through a small set of 32 registers than 1000.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=.9\textwidth]{instructions-with-registers.png}
+\end{figure}
+
+
+
+\end{document}
