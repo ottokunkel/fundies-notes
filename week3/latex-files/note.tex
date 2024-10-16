@@ -216,13 +216,109 @@ The critical path of an N-bit prefix adder involves the combination of $P_i$ and
 \purple{
 Using two's complement, it is exactly the same as addition. That is flipping the bits and adding 1.
 }
-
-\subsection{Comparators}
+\section{Comparators}
 \purple{
-  
-
+  Determines if two binary numbers are equal or if one is less than the other
 }
 
+There are two types:
+\begin{enumerate}
+  \item Equality Comparators
+  \item Magnitude Comparators
+\end{enumerate}
+
+Equality Comparators only determine if N-bit inputs are equal. 
+\smallbreak
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=.4\textwidth]{equality-comparator-implementation.png}
+\end{figure}
+
+Magnitude determines if one is less than the other by subtraction and looking at the sign. 
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=.4\textwidth]{Magnitude-comparator.png}
+\end{figure}
+
+\pagebreak
+
+\section{ALU}
+\purple{
+  A circuit that combines different mathematical and logical operations in a single unit. Decides function from a \textit{function} signal.
+}
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=.25\textwidth]{ALU.png}
+\end{figure}
+
+May be able to perform, addition, subtraction, Magnitude comparison, etc. 
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=.4\textwidth]{ALU-functions.png}
+\end{figure}
+
+\pagebreak
+
+\subsection{ALU Implementation}
+
+Here we can see the implementation of an ALU.
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=.5\textwidth]{ALU-implementation.png}
+\end{figure}
+
+It takes an input of A and B. And the \textit{Function} signal first decides whether to invert B. 
+If the function is to add them, it does that. If it is to subtract, $F_2$ will be 1 and there will be a carry-in
+when adding the inputs. Finally, it choses which output from a 4:1 mux.  
+\pagebreak
+\section{Shifters and Rotators}
+Shifters and rotators simply shift bits or divide by powers of 2. 
+\purple{
+  \textbf{Logical Shifter:} Shifts bits to the left (LSR) or right (LSR) and fills empty spots with 0. This loses the data. 
+}
+\purple{
+  \textbf{Arithmetic Shifter:} Same as Logical shifter, but shifts right and copies the old MSB to empty spots. This also loses data. But is useful for keeping signs.  
+}
+
+\purple{
+  \textbf{Rotator} Shifts bits left or right, but keeps the data. Empty spots are filled with bits from the opposite side. 
+}
+
+An N-bit shifter can be built with N, N:1, Muxes. 
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=.9\textwidth]{shifter-implementations.png}
+  \caption{(A): Left Shifter, (B): Right Shifter, (C): Logial Right Shifter}
+\end{figure}
+
+\nt{
+  Shifting is the same as multiplying and dividing by powers of $2^n$ 
+}
+\pagebreak
+
+\subsection{Multiplication}
+\purple{
+  Multiplication of two N-bit numbers, A and B, involve shifting A from 0 to N bits determined by B and summing the result
+}
+
+In general, a N x N multiplication will result in a 2N product.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=.6\textwidth]{multiplication.png}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=.9\textwidth]{multiplication-implementation.png}
+\end{figure}
+\pagebreak
+
+\subsection{Division}
 
 
 \end{document}
