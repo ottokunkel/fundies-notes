@@ -3,6 +3,8 @@
 \input{./requirements/preamble.tex}
 \input{./requirements/macros.tex}
 \input{./requirements/letterfonts.tex}
+\usepackage{float}  % Add this line to use the [H] option
+\usepackage{subcaption}  % Add this package for subfigures
 \setlength{\parindent}{0pt}
 \graphicspath{ {./assets/} }
 
@@ -12,14 +14,10 @@
 
 \begin{document}
 \chapter{Sequential Logic}
+
 \section{Latches and Flip-flops}
 \purple{Latches and flip-flops are fundamental building blocks in digital electronics used for storing binary information.}
 These bistable devices have two stable states, representing either a binary 0 or 1.
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.5\textwidth]{latches_flipflops.png}
-    \caption{Latches and Flip-flops}
-\end{figure}
 
 \section{SR Latch}
 \purple{The SR (Set-Reset) Latch is a simple storage device that holds one bit of data.} It features:
@@ -28,12 +26,22 @@ These bistable devices have two stable states, representing either a binary 0 or
     \item Two outputs: Q and Q'
     \item Function: Set input sets output to 1, Reset input resets output to 0
 \end{itemize}
+\nt{Avoid simultaneous activation of S and R to prevent undefined states}
+
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.5\textwidth]{sr_latch.png}
-    \caption{SR Latch}
+    \begin{subfigure}{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{SR_latch_symbol.png}
+        \caption{SR Latch Symbol}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{SR_latch_schematic.png}
+        \caption{SR Latch Schematic}
+    \end{subfigure}
 \end{figure}
-\nt{Avoid simultaneous activation of S and R to prevent undefined states}
 
 \section{D Latch}
 \purple{The D (Data or Delay) Latch captures input at specific times.} Key characteristics include:
@@ -42,11 +50,6 @@ These bistable devices have two stable states, representing either a binary 0 or
     \item When clock is active: Output Q follows input D
     \item When clock is inactive: Output Q holds its last state
 \end{itemize}
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.5\textwidth]{d_latch.png}
-    \caption{D Latch}
-\end{figure}
 \nt{D Latches are useful for data synchronization}
 
 \section{D Flip-flop}
@@ -56,12 +59,22 @@ These bistable devices have two stable states, representing either a binary 0 or
     \item Captures D input value at clock edge
     \item Holds value until next clock edge
 \end{itemize}
+\nt{D Flip-flops ensure precise timing in digital systems}
+
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.5\textwidth]{d_flipflop.png}
-    \caption{D Flip-flop}
+    \begin{subfigure}{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{D-flip-flop_symbol.png}
+        \caption{D Flip-flop Symbol}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{D_flip-flop_schematic.png}
+        \caption{D Flip-flop Schematic}
+    \end{subfigure}
 \end{figure}
-\nt{D Flip-flops ensure precise timing in digital systems}
 
 \section{Register}
 \purple{A Register is composed of multiple flip-flops and is used to store and manipulate data.} Features include:
@@ -70,10 +83,11 @@ These bistable devices have two stable states, representing either a binary 0 or
     \item Applications: data storage, transfer, and manipulation
     \item Configurable for operations like shifting, loading, and clearing
 \end{itemize}
+
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.5\textwidth]{register.png}
-    \caption{Register}
+    \includegraphics[width=0.8\textwidth]{Register_schematic_and_symbol.png}
+    \caption{Register Schematic and Symbol}
 \end{figure}
 
 \section{Enabled Flip-flop}
@@ -83,11 +97,6 @@ These bistable devices have two stable states, representing either a binary 0 or
     \item Enable active: Captures input data at clock edge
     \item Enable inactive: Retains current state regardless of input
 \end{itemize}
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.5\textwidth]{enabled_flipflop.png}
-    \caption{Enabled Flip-flop}
-\end{figure}
 
 \section{Resettable Flip-flop}
 \purple{A Resettable Flip-flop allows forced state changes.} It features:
@@ -95,12 +104,13 @@ These bistable devices have two stable states, representing either a binary 0 or
     \item A reset input
     \item Can force flip-flop to a known state (typically 0)
 \end{itemize}
+\nt{Resettable Flip-flops are useful for circuit initialization during power-up or specific conditions}
+
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.5\textwidth]{resettable_flipflop.png}
-    \caption{Resettable Flip-flop}
+    \includegraphics[width=0.8\textwidth]{Resettable_flip_flop_schematic_and_symbol.png}
+    \caption{Resettable Flip-flop Schematic and Symbol}
 \end{figure}
-\nt{Resettable Flip-flops are useful for circuit initialization during power-up or specific conditions}
 
 \section{Counter}
 \purple{Counters are sequential circuits for tracking events.} Characteristics include:
@@ -109,11 +119,6 @@ These bistable devices have two stable states, representing either a binary 0 or
     \item Implemented using flip-flops
     \item Can count up, down, or in specific patterns
 \end{itemize}
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.5\textwidth]{counter.png}
-    \caption{Counter}
-\end{figure}
 \nt{Counters are used for event occurrence counting}
 
 \section{Shift Register}
@@ -123,10 +128,20 @@ These bistable devices have two stable states, representing either a binary 0 or
     \item Composed of flip-flops in a chain
     \item Applications: data storage, transfer, and format conversion
 \end{itemize}
+
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.5\textwidth]{shift_register.png}
-    \caption{Shift Register}
+    \begin{subfigure}{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{shift-register_symbol.png}
+        \caption{Shift Register Symbol}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{shift_register_schematic.png}
+        \caption{Shift Register Schematic}
+    \end{subfigure}
 \end{figure}
 
 \subsection{Scan Chains}
@@ -135,11 +150,6 @@ These bistable devices have two stable states, representing either a binary 0 or
     \item Series of flip-flops connected in a chain
     \item Enables shifting of test data into and out of the circuit
 \end{itemize}
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.5\textwidth]{scan_chains.png}
-    \caption{Scan Chains}
-\end{figure}
 \nt{Scan Chains are used to test internal circuit states and ensure correct operation}
 
 \end{document}
